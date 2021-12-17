@@ -1,0 +1,1 @@
+# SDET-Test-Architect-Essentials-Road-to-Full-stack-QA
