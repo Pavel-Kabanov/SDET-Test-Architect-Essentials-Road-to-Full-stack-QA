@@ -7,17 +7,17 @@ public class JsonToJava {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Business", "JavaAllPermissions", "admin");
         Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("select * from CustomerInfo where Location = 'Asia' and PurchaseDate = curdate();");
+        ResultSet result = statement.executeQuery("select * from CustomerInfo where Location = 'Asia' limit 1;");
 
         while (result.next()) {
-            System.out.print(result.getString(1) + " ");
-            System.out.print(result.getString(2) + " ");
-            System.out.print(result.getInt(3) + " ");
-            System.out.print(result.getString(4) + " ");
-            System.out.println(" ");
+            CustomerDetails customerDetails = new CustomerDetails(
+                    result.getString(1), // courseName
+                    result.getString(2), // purchaseDate
+                    result.getInt(3), // amount
+                    result.getString(4) // location
+            );
         }
 
         connection.close();
-
     }
 }
