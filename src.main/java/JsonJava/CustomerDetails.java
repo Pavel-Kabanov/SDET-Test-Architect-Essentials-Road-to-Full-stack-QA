@@ -6,6 +6,9 @@ public class CustomerDetails {
     private int amount;
     private String location;
 
+    public CustomerDetails() {
+    }
+
     public CustomerDetails(String courseName, String purchaseDate, int amount, String location) {
         this.courseName = courseName;
         this.purchaseDate = purchaseDate;
