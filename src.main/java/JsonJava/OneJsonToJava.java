@@ -3,59 +3,80 @@ package JsonJava;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.text.StringEscapeUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OneJsonToJava {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
-        // DB section
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Business", "JavaAllPermissions", "admin");
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("select * from CustomerInfo where Location = 'Asia';");
-
-        // Variables
-        JSONArray jsonArray = new JSONArray();
-        ArrayList<CustomerDetails> arrayList = new ArrayList<>();
-
-        // Looking through results
-        while (result.next()) {
-            arrayList.add(new CustomerDetails(
-                    result.getString(1), // courseName
-                    result.getString(2), // purchaseDate
-                    result.getInt(3), // amount
-                    result.getString(4) // location
+    public void customerDetailsJson(@NotNull ResultSet resultSet) throws SQLException, IOException {
+        ArrayList<CustomerDetails> customerDetailsArrayList = new ArrayList<>();
+        while (resultSet.next()) {
+            customerDetailsArrayList.add(new CustomerDetails(
+                    resultSet.getString(1), // courseName
+                    resultSet.getString(2), // purchaseDate
+                    resultSet.getInt(3), // amount
+                    resultSet.getString(4) // location
             ));
         }
+        JSONArray jsonArray = objectsToJson(customerDetailsArrayList);
+        String jsonToString = jsonToString(jsonArray);
+        writingToJson("src.main/java/JsonJava/JsonResult/CustomerInfo.json", jsonToString);
+    }
 
-        // Adding objects as JSON to an array
-        for (CustomerDetails customerDetails : arrayList) {
-            jsonArray.add(new Gson().toJson(customerDetails));
+    public void customerDetailsTestJson(@NotNull ResultSet resultSet) throws SQLException, IOException {
+        ArrayList<CustomerDetails> customerDetailsArrayList = new ArrayList<>();
+        while (resultSet.next()) {
+            customerDetailsArrayList.add(new CustomerDetails(
+                    resultSet.getString(1), // courseName
+                    resultSet.getString(2), // purchaseDate
+                    resultSet.getInt(3), // amount
+                    resultSet.getString(4) // location
+            ));
         }
+        JSONArray jsonArray = objectsToJson(customerDetailsArrayList);
+        String jsonToString = jsonToString(jsonArray);
+        writingToJson("src.main/java/JsonJava/JsonResult/CustomerInfoTest.json", jsonToString);
+    }
 
-        // Preparing JSON to a String
+    public void clearPrevResults() throws IOException {
+        FileUtils.cleanDirectory(new File("src.main/java/JsonJava/JsonResult"));
+    }
+
+    // General
+    @org.jetbrains.annotations.NotNull
+    private JSONArray objectsToJson(@NotNull ArrayList arrayList) {
+        JSONArray jsonArray = new JSONArray();
+        for (Object o : arrayList) {
+            jsonArray.add(new Gson().toJson(o));
+        }
+        return jsonArray;
+    }
+
+    private @NotNull String jsonToString(JSONArray jsonArray) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", jsonArray);
         String unescapedString = StringEscapeUtils.unescapeJava(jsonObject.toString());
-        // Fixing problem with extra quotes
-        String unescapedStringQuotesFix = unescapedString
+        return fixQuotes(unescapedString);
+    }
+
+    private void writingToJson(String path, String writeMe) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(path)) {
+            fileWriter.write(writeMe);
+        }
+    }
+
+    // Utils
+    private @NotNull String fixQuotes(@NotNull String string) {
+        return string
                 .replace("\"{", "{")
                 .replace("}\"", "}");
-
-        // Writing to file section.
-        // Clear folder with previous result
-        FileUtils.cleanDirectory(new File("src.main/java/JsonJava/JsonResult"));
-        // Writing
-        try (FileWriter fileWriter = new FileWriter("src.main/java/JsonJava/JsonResult/transactions.json")) {
-            fileWriter.write(unescapedStringQuotesFix);
-        }
-
-        connection.close();
     }
+
 }
