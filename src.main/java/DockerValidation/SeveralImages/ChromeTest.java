@@ -2,12 +2,14 @@ package DockerValidation.SeveralImages;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ChromeTest {
-    public static void main(String[] args) throws MalformedURLException {
+    @Test
+    public void chromeTest() throws MalformedURLException {
         URL localMachine = new URL("http://localhost:4444/wd/hub");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setBrowserName("chrome");
@@ -15,5 +17,6 @@ public class ChromeTest {
 
         remoteWebDriver.get("http://google.com");
         System.out.println(remoteWebDriver.getTitle());
+        remoteWebDriver.close();
     }
 }
