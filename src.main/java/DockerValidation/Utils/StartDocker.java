@@ -9,8 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class startDocker {
-    @Test
+public class StartDocker {
     public void startFile() throws IOException, InterruptedException {
         Runtime runtime = Runtime.getRuntime();
         runtime.exec("cmd /c start docker\\dockerUp.bat"); // Starting Docker
@@ -43,9 +42,6 @@ public class startDocker {
             bufferedReader.close();
         }
         Assert.assertTrue(flag);
-
-//         Scale was placed into dickerUp.bat
-//        runtime.exec("cmd /c start docker\\dockerScaleChrome.bat"); // Scale chrome up to 5
 
         Thread.sleep(15000);
 

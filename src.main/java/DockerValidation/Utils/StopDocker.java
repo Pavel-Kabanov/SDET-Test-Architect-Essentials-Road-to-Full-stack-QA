@@ -8,8 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class stopDocker {
-    @Test
+public class StopDocker {
     public void stopFile() throws IOException {
         Runtime runtime = Runtime.getRuntime();
         runtime.exec("cmd /c start docker\\dockerDown.bat"); // Starting Docker
@@ -34,7 +33,8 @@ public class stopDocker {
             bufferedReader.close();
         }
         Assert.assertTrue(flag);
-        File fileToDelete = new File("docker/log/docker.log");
-        Assert.assertTrue(fileToDelete.delete());
+//        File fileToDelete = new File("docker/log/docker.log");
+//        Assert.assertTrue(fileToDelete.delete());
+//        System.out.println("Log file successfully deleted");
     }
 }
