@@ -13,15 +13,17 @@ public class startDocker {
     @Test
     public void startFile() throws IOException, InterruptedException {
         Runtime runtime = Runtime.getRuntime();
-        runtime.exec("cmd /c start docker\\dockerUp.bat");
+        runtime.exec("cmd /c start docker\\dockerUp.bat"); // Starting Docker
 
         String dockerLogFile = "docker/log/docker.log";
         new File(dockerLogFile);
         int counter = 0;
         boolean flag = false;
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(); // Calendar is needed to waiting server start
         calendar.add(Calendar.SECOND, 45);
         long stopNow = calendar.getTimeInMillis();
+
+        Thread.sleep(3000); // Delay for file creation
 
         while (System.currentTimeMillis() < stopNow) {
             if (flag) break;
@@ -41,7 +43,11 @@ public class startDocker {
             bufferedReader.close();
         }
         Assert.assertTrue(flag);
-        Thread.sleep(3000);
+
+//         Scale was placed into dickerUp.bat
+//        runtime.exec("cmd /c start docker\\dockerScaleChrome.bat"); // Scale chrome up to 5
+
+        Thread.sleep(15000);
 
     }
 }
