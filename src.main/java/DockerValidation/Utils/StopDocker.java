@@ -1,10 +1,8 @@
 package DockerValidation.Utils;
 
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 

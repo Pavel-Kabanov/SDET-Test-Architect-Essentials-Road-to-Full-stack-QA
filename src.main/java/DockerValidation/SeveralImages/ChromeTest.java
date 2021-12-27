@@ -1,34 +1,27 @@
 package DockerValidation.SeveralImages;
 
-import DockerValidation.Utils.StartDocker;
-import DockerValidation.Utils.StopDocker;
+import DockerValidation.Utils.DockerManagement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ChromeTest {
+    DockerManagement dockerManagement = new DockerManagement();
+
     @BeforeTest
     public void startDocker() throws IOException, InterruptedException {
-        File fileToDelete = new File("docker/log/docker.log");
-        fileToDelete.delete();
-        System.out.println("Log file successfully deleted");
-
-        StartDocker startDocker = new StartDocker();
-        startDocker.startFile();
+        dockerManagement.start();
     }
 
     @AfterTest
-    public void stopDocker() throws IOException {
-        StopDocker stopDocker = new StopDocker();
-        stopDocker.stopFile();
+    public void stopDocker() throws IOException, InterruptedException {
+        dockerManagement.stop();
     }
 
     @Test
