@@ -68,7 +68,9 @@ public class DockerManagement {
 
     private void oldLogFileDeletion() {
         File fileToDelete = new File("docker/log/docker.log");
-        new File("docker/log").mkdirs();
+        if (!new File("docker/log").exists()) {
+            new File("docker/log").mkdirs();
+        }
         if (fileToDelete.exists()) {
             fileToDelete.delete();
             System.out.println("*** Log file successfully deleted ***");
