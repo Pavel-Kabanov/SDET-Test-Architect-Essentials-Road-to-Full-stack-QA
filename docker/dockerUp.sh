@@ -1,1 +1,1 @@
-docker-compose -f docker/docker-compose.yml up --scale chrome=5 &> /var/jenkins_home/workspace/DockerGitHub/docker/log/docker.log
+docker-compose -f /var/jenkins_home/workspace/DockerGitHub/docker/docker-compose.yml up --scale chrome=5 &> /var/jenkins_home/workspace/DockerGitHub/docker/log/docker.log
