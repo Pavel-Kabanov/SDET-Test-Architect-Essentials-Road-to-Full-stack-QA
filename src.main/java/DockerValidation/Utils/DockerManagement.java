@@ -63,7 +63,6 @@ public class DockerManagement {
             bufferedReader.close();
         }
         Assert.assertTrue(flag);
-        Thread.sleep(15000);
     }
 
     private void oldLogFileDeletion() {
