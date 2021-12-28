@@ -12,31 +12,31 @@ public class DockerManagement {
     String dockerLogFile = "docker/log/docker.log";
 
     public void start() throws IOException, InterruptedException {
-        String startBatFileName = "dockerUp";
+        String startScriptFileName = "dockerUp";
         String serverStartFlag = "from DOWN to UP";
         int counterStringFlag = 3;
 
         oldLogFileDeletion();
         new File(dockerLogFile);
-        management(startBatFileName, serverStartFlag, counterStringFlag);
+        management(startScriptFileName, serverStartFlag, counterStringFlag);
     }
 
     public void stop() throws IOException, InterruptedException {
-        String downBatFileName = "dockerDown";
+        String downScriptFileName = "dockerDown";
         String serverStopFlag = "Shutdown complete";
         int counterStringFlag = 7;
 
-        management(downBatFileName, serverStopFlag, counterStringFlag);
+        management(downScriptFileName, serverStopFlag, counterStringFlag);
     }
 
-    private void management(String batFileName, String stringFlag, int counterStringFlag) throws IOException, InterruptedException {
+    private void management(String scriptFileName, String stringFlag, int counterStringFlag) throws IOException, InterruptedException {
         int counter = 0;
         boolean flag = false;
 
         // Starting Docker
         Runtime runtime = Runtime.getRuntime();
-//        runtime.exec("cmd /c start docker\\" + batFileName + ".bat"); // Use it for Windows
-        runtime.exec("./docker/" + batFileName + ".sh");
+//        runtime.exec("cmd /c start docker\\" + scriptFileName + ".bat"); // Use it for Windows
+        runtime.exec("./docker/" + scriptFileName + ".sh");
 
         // Delay for file creation
         Thread.sleep(3000);
