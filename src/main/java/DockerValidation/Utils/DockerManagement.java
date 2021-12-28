@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class DockerManagement {
-    String dockerLogFile = "docker/log/docker.log";
+    String dockerLogFile = "/var/jenkins_home/workspace/DockerGitHub/docker/log/docker.log";
 
     public void start() throws IOException, InterruptedException {
         String startScriptFileName = "dockerUp";
@@ -67,9 +67,9 @@ public class DockerManagement {
     }
 
     private void oldLogFileDeletion() {
-        File fileToDelete = new File("docker/log/docker.log");
-        if (!new File("docker/log").exists()) {
-            new File("docker/log").mkdirs();
+        File fileToDelete = new File("/var/jenkins_home/workspace/DockerGitHub/docker/log/docker.log");
+        if (!new File("/var/jenkins_home/workspace/DockerGitHub/docker/log").exists()) {
+            new File("/var/jenkins_home/workspace/DockerGitHub/docker/log").mkdirs();
         }
         if (fileToDelete.exists()) {
             fileToDelete.delete();
