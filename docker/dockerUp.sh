@@ -1,1 +1,1 @@
-docker-compose -f docker\docker-compose.yml up --scale chrome=5 >> docker\log\docker.log
+docker-compose -f docker/docker-compose.yml up --scale chrome=5 >> docker/log/docker.log
