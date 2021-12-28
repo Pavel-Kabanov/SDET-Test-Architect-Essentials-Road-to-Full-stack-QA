@@ -46,10 +46,12 @@ public class DockerManagement {
         calendar.add(Calendar.SECOND, 45);
         long stopNow = calendar.getTimeInMillis();
 
+        System.out.println("*** Before while loop 1 ***");
         while (System.currentTimeMillis() < stopNow) {
             if (flag) break;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(dockerLogFile));
             String currentLine = bufferedReader.readLine();
+            System.out.println("*** Before while loop 2 ***");
             while (currentLine != null && !flag) {
                 if (currentLine.contains(stringFlag)) {
                     counter++;
