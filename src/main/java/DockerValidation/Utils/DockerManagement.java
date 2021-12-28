@@ -42,12 +42,11 @@ public class DockerManagement {
         Thread.sleep(10000);
 
         // Calendar is needed to waiting server start
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.SECOND, 45);
-//        long stopNow = calendar.getTimeInMillis();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 45);
+        long stopNow = calendar.getTimeInMillis();
 
-//        while (System.currentTimeMillis() < stopNow) {
-        while (!flag) {
+        while (System.currentTimeMillis() < stopNow) {
             if (flag) break;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(dockerLogFile));
             String currentLine = bufferedReader.readLine();
