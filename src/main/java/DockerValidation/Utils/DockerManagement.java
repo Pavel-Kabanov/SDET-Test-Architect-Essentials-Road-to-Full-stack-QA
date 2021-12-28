@@ -36,7 +36,7 @@ public class DockerManagement {
         // Starting Docker
         Runtime runtime = Runtime.getRuntime();
 //        runtime.exec("cmd /c start docker\\" + scriptFileName + ".bat"); // Use it for Windows
-        runtime.exec("CMD \"./docker/" + scriptFileName + ".sh\"");
+        runtime.exec("CMD ./docker/" + scriptFileName + ".sh");
 
         // Delay for file creation
         Thread.sleep(10000);
