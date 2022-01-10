@@ -4,6 +4,9 @@ import jdk.jfr.Name;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 public class StreamsTutorial {
@@ -44,7 +47,23 @@ public class StreamsTutorial {
         listOfNames().forEach(System.out::print);
     }
 
+    @Test
+    public void streamMap() {
+        listOfNames()
+                .filter(s -> s.startsWith("A"))
+                .map(String::toUpperCase)
+                .forEach(System.out::print);
+
+        System.out.println();
+
+        listOfNames()
+                .filter(s -> s.startsWith("A"))
+                .sorted()
+                .map(String::toUpperCase)
+                .forEach(System.out::print);
+    }
+
     private Stream<String> listOfNames() {
-        return Stream.of("A", "Ab", "Ac", "Ad", "D");
+        return Stream.of("Az", "Ab", "Ac", "Ad", "D", "aB");
     }
 }
