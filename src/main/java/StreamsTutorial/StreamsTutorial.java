@@ -1,12 +1,10 @@
 package StreamsTutorial;
 
 import jdk.jfr.Name;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import java.util.stream.Stream;
 
 public class StreamsTutorial {
@@ -40,30 +38,44 @@ public class StreamsTutorial {
     @Test
     @Name("Stream filter by letter 'A'")
     public void streamFilterByLetterA() {
-        Long count = listOfNames().filter(s -> s.startsWith("A")).count();
+        Long count = listOfFirstNames().filter(s -> s.startsWith("A")).count();
         System.out.println(count);
 
         System.out.print("Stream filter by letter 'A' test: ");
-        listOfNames().forEach(System.out::print);
+        listOfFirstNames().forEach(System.out::print);
     }
 
     @Test
     public void streamMap() {
-        listOfNames()
+        listOfFirstNames()
                 .filter(s -> s.startsWith("A"))
                 .map(String::toUpperCase)
                 .forEach(System.out::print);
 
         System.out.println();
 
-        listOfNames()
+        listOfFirstNames()
                 .filter(s -> s.startsWith("A"))
                 .sorted()
                 .map(String::toUpperCase)
                 .forEach(System.out::print);
+
+        System.out.println();
+
+        Stream<String> allNames = Stream.concat(listOfFirstNames(), listOfLastNames());
+//        allNames
+//                .sorted()
+//                .forEach(System.out::print);
+
+        boolean flag = allNames.anyMatch(s -> s.equalsIgnoreCase("za"));
+        Assert.assertTrue(flag);
     }
 
-    private Stream<String> listOfNames() {
+    private Stream<String> listOfFirstNames() {
         return Stream.of("Az", "Ab", "Ac", "Ad", "D", "aB");
+    }
+
+    private Stream<String> listOfLastNames() {
+        return Stream.of("zA", "bA", "cA", "dA", "D", "bA");
     }
 }
