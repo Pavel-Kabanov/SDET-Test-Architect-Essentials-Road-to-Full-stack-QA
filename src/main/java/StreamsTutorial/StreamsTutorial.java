@@ -39,6 +39,9 @@ public class StreamsTutorial {
     public void streamFilterByLetterA() {
         Long count = listOfNames().filter(s -> s.startsWith("A")).count();
         System.out.println(count);
+
+        System.out.print("Stream filter by letter 'A' test: ");
+        listOfNames().forEach(System.out::print);
     }
 
     private Stream<String> listOfNames() {
