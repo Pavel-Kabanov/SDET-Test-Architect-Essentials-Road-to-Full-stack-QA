@@ -1,5 +1,8 @@
 package DataProvider;
 
+import javafx.scene.input.DataFormat;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -26,13 +29,17 @@ public class DataProvide {
         XSSFRow row = workbookSheet.getRow(0);
         int columnCount = row.getLastCellNum();
 
+        DataFormatter dataFormatter = new DataFormatter();
+
         Object[][] data = new Object[rowCount - 1][columnCount];
 
-//        for (int i = 1; i < rowCount; i++) {
-//            for (int k = 0; k < columnCount; k++) {
-//                data[i][k] =
-//            }
-//        }
+        for (int i = 1; i < rowCount; i++) {
+            row = workbookSheet.getRow(i);
+            for (int k = 0; k < columnCount; k++) {
+                XSSFCell cell = row.getCell(k);
+                data[i - 1][k] = dataFormatter.formatCellValue(cell);
+            }
+        }
 
         return data;
     }
