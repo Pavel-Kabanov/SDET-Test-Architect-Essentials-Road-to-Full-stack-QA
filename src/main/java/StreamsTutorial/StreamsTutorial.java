@@ -1,8 +1,10 @@
 package StreamsTutorial;
 
+import jdk.jfr.Name;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class StreamsTutorial {
     @Test
@@ -32,4 +34,14 @@ public class StreamsTutorial {
         System.out.println(countA);
     }
 
+    @Test
+    @Name("Stream filter by letter 'A'")
+    public void streamFilterByLetterA() {
+        Long count = listOfNames().filter(s -> s.startsWith("A")).count();
+        System.out.println(count);
+    }
+
+    private Stream<String> listOfNames() {
+        return Stream.of("A", "Ab", "Ac", "Ad", "D");
+    }
 }
