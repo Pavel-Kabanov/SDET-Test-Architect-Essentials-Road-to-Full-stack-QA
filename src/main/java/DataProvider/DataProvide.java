@@ -1,6 +1,5 @@
 package DataProvider;
 
-import javafx.scene.input.DataFormat;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -10,29 +9,26 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DataProvide {
     @DataProvider(name = "simpleDataProvider")
     public Object[][] getData() throws IOException {
-//        Object[][] data = {
-//                {"first", "first", "1"},
-//                {"second", "second", "2"},
-//                {"third", "third", "3"}
-//        };
-//        return data;
-        FileInputStream inputFile = new FileInputStream("src/main/java/DataProvider/Utils/DataProvider.xlsx");
-        XSSFWorkbook workbook = new XSSFWorkbook(inputFile);
+
+        // Open workbook
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("src/main/java/DataProvider/Utils/DataProvider.xlsx"));
+        // Selecting workbook sheet
         XSSFSheet workbookSheet = workbook.getSheetAt(0);
+        // Counting rows on sheet
         int rowCount = workbookSheet.getPhysicalNumberOfRows();
+        // Counting columns - row needed only for that
         XSSFRow row = workbookSheet.getRow(0);
         int columnCount = row.getLastCellNum();
-
+        // Using formatter cause our test waiting for String three times
         DataFormatter dataFormatter = new DataFormatter();
-
+        // Creating multi dimension array
         Object[][] data = new Object[rowCount - 1][columnCount];
-
+        // Collecting values from cells using outer and inner loop
         for (int i = 1; i < rowCount; i++) {
             row = workbookSheet.getRow(i);
             for (int k = 0; k < columnCount; k++) {
@@ -40,7 +36,6 @@ public class DataProvide {
                 data[i - 1][k] = dataFormatter.formatCellValue(cell);
             }
         }
-
         return data;
     }
 
