@@ -4,7 +4,12 @@ import jdk.jfr.Name;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamsTutorial {
@@ -69,6 +74,23 @@ public class StreamsTutorial {
 
         boolean flag = allNames.anyMatch(s -> s.equalsIgnoreCase("za"));
         Assert.assertTrue(flag);
+    }
+
+    @Test
+    public void streamCollect() {
+        List<String> list = listOfLastNames()
+                .filter(s -> s.endsWith("A"))
+                .map(s -> s.toUpperCase())
+                .collect(Collectors.toList());
+
+        System.out.println(list.get(0));
+
+        List<Integer> integerArray = Arrays.asList(1, 3, 4, 5, 2, 4, 5, 6, 8, 3, 1, 2, 3, 4, 5, 2, 1);
+        integerArray
+                .stream()
+                .distinct()
+                .sorted()
+                .forEach(System.out::print);
     }
 
     private Stream<String> listOfFirstNames() {
